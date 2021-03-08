@@ -1,11 +1,6 @@
-/**
- * place custom style in this file
+/* place custom style in this file
  * add !important to the end if no effect
- * e.g. color: #fff !important;
- * --------------------------------------------------
- *
- */
-
+ * e.g. color: #fff !important;*/
  #eye {
     position:absolute;
     right:50px;
