@@ -1,8 +1,8 @@
 /* place custom style in this file
  * add !important to the end if no effect
  * e.g. color: #fff !important;*/
- #eye {
+ .eye {
     position:absolute;
-    right:50px;
+    right:52px;
     top:6px;
   }

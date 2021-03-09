@@ -71,7 +71,7 @@
                                                                             <input id="inputPassword" type="password" name="password" placeholder="Password" class="form-control" required>
                                                                         </div>
                                                                     </div>
-                                                                    <input id=eye type="checkbox" class="form-checkbox">
+                                                                    <input type="checkbox" class="eye form-checkbox">
                                                                 </div>
                                                                 <div class="col-md-12">
                                                                     <div style="text-align:center" class="form-group">
@@ -83,11 +83,9 @@
                                                                 </div>
                                                                 <div class="btn-group">
                                                                     <button type="submit" class="btn btn-primary"><span class="btn-elem-wrap"><span class="icon fa fa-send"></span><span class="text">LOGIN</span></span></button>
-															        <a href="https://webqr.com/" class="btn btn-primary" role="button">QR Code</a>
+															        <a href="https://webqr.com/"><button type="button" class="btn btn-primary"><span class="btn-elem-wrap"><span class="icon fa fa-check"></span><span class="text">QR Code</span></span></button></a>
                                                                 </div>
-                                                                <div>$(if trial == 'yes')<a  href="$(link-login-only)?dst=$(link-orig-esc)&amp;username=T-$(mac-esc)">Free WiFi</a>$(endif)</div>
-                                                                <!--<div class="col-md-12">
-                                                                    <div class="form-group mb-0">-->
+                                                                <div>$(if trial == 'yes')<a style="color: #FF8080" href="$(link-login-only)?dst=$(link-orig-esc)&amp;username=T-$(mac-esc)">Free WiFi</a>$(endif)</div>
                                                             </div>
                                                         </form>
                                                     </div>
