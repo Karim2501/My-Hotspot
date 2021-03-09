@@ -51,10 +51,7 @@
                                             <div class="textwidget">
                                                 <div class="card card-light">
                                                     <div class="card-title pt-md bg-secondary">
-                                                        <div class="card-text">
-                                                            <div class="title primary-text-light"><h1>Karim Cell 2</h1></div>
-															<div><a href="https://webqr.com/" class="btn btn-primary btn-sm" role="button">QR Code</a><span class="text"> </span>$(if trial == 'yes')<a  href="$(link-login-only)?dst=$(link-orig-esc)&amp;username=T-$(mac-esc)" class="btn btn-primary btn-sm" role="button">Free WiFi</a>$(endif)</div>
-                                                        </div>
+                                                        <div class="card-text"><div class="title primary-text-light"><h1>Karim Cell 2</h1></div></div>
                                                     </div>
                                                     <div class="card-block py-lg px-md">
                                                         <form id="loginForm" class="md-form form-light" role="form" action="$(link-login-only)" method="post">
@@ -84,12 +81,13 @@
                                                                         $(endif)
                                                                     </div>
                                                                 </div>
-                                                                <div class="col-md-12">
-                                                                    <div class="form-group mb-0">
-                                                                        <button type="submit" class="btn btn-block btn-primary"><span class="btn-elem-wrap"> <span class="icon fa fa-send"></span><span class="text">LOGIN</span></span></button>
-                                                                        <span style="display: none;" class="form-notify help-block mb-0"></span>
-                                                                    </div>
+                                                                <div class="btn-group">
+                                                                    <button type="submit" class="btn btn-primary"><span class="btn-elem-wrap"><span class="icon fa fa-send"></span><span class="text">LOGIN</span></span></button>
+															        <a href="https://webqr.com/" class="btn btn-primary" role="button">QR Code</a>
                                                                 </div>
+                                                                <div>$(if trial == 'yes')<a  href="$(link-login-only)?dst=$(link-orig-esc)&amp;username=T-$(mac-esc)">Free WiFi</a>$(endif)</div>
+                                                                <!--<div class="col-md-12">
+                                                                    <div class="form-group mb-0">-->
                                                             </div>
                                                         </form>
                                                     </div>
