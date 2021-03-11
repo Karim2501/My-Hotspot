@@ -15,39 +15,116 @@
     <script src="assets\js\modernizr.js"></script>
 	<title>Karim Cell 2</title>
 </head>
-
 <body>
-<script language="JavaScript">
-<!--
-    function openLogin() {
-	if (window.name != 'hotspot_logout') return true;
-	open('$(link-login)', '_blank', '');
-	window.close();
-	return false;
-    }
-//-->
-</script>
-
-<table width="100%" height="100%">
-
-<tr>
-<td align="center" valign="middle">
-<b>you have just logged out</b> <br><br>
-<table class="tabula" border="1">  
-<tr><td align="right">user name</td><td>$(username)</td></tr>
-<tr><td align="right">IP address</td><td>$(ip)</td></tr>
-<tr><td align="right">MAC address</td><td>$(mac)</td></tr>
-<tr><td align="right">session time</td><td>$(uptime)</td></tr>
-$(if session-time-left)
-<tr><td align="right">time left</td><td>$(session-time-left)</td></tr>
-$(endif)
-<tr><td align="right">bytes up/down:</td><td>$(bytes-in-nice) / $(bytes-out-nice)</td></tr>
-</table>
-<br>
-<form action="$(link-login)" name="login" onSubmit="return openLogin()">
-<input type="submit" value="log in">
-</form>
-</td>
-</table>
+    <div class="site">
+        <div id="site_loader" class="site-loader">
+            <div class="spinner"><span class="bounce"></span><span class="bounce"></span><span class="bounce"></span></div>
+        </div>
+        <div class="site-canvas">
+            <div id="site_header" class="site-header">
+                <nav id="site_header_navbar" class="site-header-navbar navbar navbar-fixed-top navbar-lg navbar-bg-from-transparent navbar-fg-from-light navbar-light">
+                    <div class="container">
+                        <div id="site_header_navbar_collapse" class="collapse navbar-collapse">
+                            <ul class="nav navbar-nav navbar-right">
+                                <li><a href="login.html"><span class="navbar-nav-elem-wrap"><span class="text">Login</span></span></a></li>
+                            </ul>
+                        </div>
+                    </div>
+                </nav>
+            </div>
+            <div id="site_content" class="site-content">
+                <div id="page_intro_section" style="height:100vh;" class="align align-middle page-intro-section page-intro-section-lg section section-md bg-primary">
+                    <div data-css-background-image="assets/img/page-intro-bg-pattern.png" class="bg-img bg-img-parallax bg-repeat bg-no-cover"></div>
+                    <div class="col-lg-3"></div>
+                    <div data-wow-delay="50ms" class="widget-section widget widget_text col-sm-12 col-md-12 col-lg-6 wow fadeInUpShort">
+                        <div class="widget-wrap">
+                            <div class="textwidget">
+                                <div class="card card-light">
+                                    <div class="card-title pt-md bg-secondary">
+                                        <div class="card-text">
+                                            <center>
+                                                <div class="title primary-text-light">Terima Kasih</div>
+                                                <div class="subtitle secondary-text-light">Anda sudah keluar dari layanan Hotspot Karim Cell 2</div>
+                                            </center>
+                                        </div>
+                                    </div>
+                                    <div class="card">
+                                        <tr>
+                                            <td>
+                                                <div class="hotsite-container favsite-count">
+                                                    <div class="hotsite hotsite-ele cur">
+                                                        <div class="row">
+                                                            <div class="panel panel-default">
+                                                                <div class="panel-body">
+                                                                    <table class="table table-striped">
+                                                                        <tbody>
+                                                                            <tr><td class="success">Username</td><td class="danger">$(username)</td></tr>
+                                                                            <tr><td>IP Address</td><td>$(ip)</td></tr>
+                                                                            <tr><td class="success">MAC Address</td><td class="danger">$(mac)</td></tr>
+                                                                            $(if session-time-left)
+                                                                            <tr><td>Connected / left:</td><td>$(uptime) / $(session-time-left)</td></tr>
+                                                                            $(else)
+                                                                            <tr><td>Connected </td><td>$(uptime)</td></tr>
+                                                                            $(endif)
+                                                                            <tr><td class="success">Download / Upload</td><td class="danger">$(bytes-out-nice) / $(bytes-in-nice)</td></tr>
+                                                                            $(if refresh-timeout)
+                                                                            <tr><td>Status refresh</td><td>$(refresh-timeout)</td></tr>
+                                                                            $(endif)
+                                                                            $(if limit-bytes-total)
+                                                                            <tr><td class="success">Sisa Kuota</td><td class="danger">$(if limit-bytes-total)
+                                                                                    <script language="JavaScript"> result = ($(limit - bytes - total) / 1000000).toFixed(2);document.write(result);
+                                                                                    </script> MiB $(endif) $(if limit-bytes-total == '')Unlimited$(endif)
+                                                                                </td>
+                                                                            </tr>
+                                                                            $(else)
+                                                                            <tr><td class="success">Sisa Kuota</td><td class="danger">$(if limit-bytes-out)
+                                                                                    <script language="JavaScript">result = ($(limit - bytes - out) / 1000000).toFixed(2);document.write(result);
+                                                                                    </script> MiB $(endif) $(if limit-bytes-out == '')Unlimited$(endif)
+                                                                                </td>
+                                                                            </tr>
+                                                                            $(endif)
+                                                                            $(if session-time-left)
+                                                                            <tr><td>Sisa Waktu</td><td>$(session-time-left)</td></tr>
+                                                                            $(endif)
+                                                                        </tbody>
+                                                                    </table>
+                                                                </div>
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </td>
+                                        </tr>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    </div>
+    <div id="site_footer">
+        <div id="site_footer_info" class="site-footer-info section section-sm text-center bg-dark">
+            <div class="container">
+                <nav class="site-footer-social-nav mb-lg">
+                    <ul class="site-footer-social-menu list-inline ml-0">
+                        <li data-wow-delay="100ms" class="menu-item px-md wow fadeInUpShort"><a href="https://www.facebook.com/karimdan.adra/" target="_blank" class="primary-text-light"><span class="icon fa fa-facebook-official"></span><span> Facebook</span></a></li>
+                        <li data-wow-delay="100ms" class="menu-item px-md wow fadeInUpShort"><a href="https://www.instagram.com/karim.2501" target="_blank" class="primary-text-light"><span class="icon fa fa-instagram"></span><span> Instagram</span></a></li>
+                        <li data-wow-delay="100ms" class="menu-item px-md wow fadeInUpShort"><a href="https://wa.me/6285769143295?text=Hallo kak, saya mau beli voucher internet Karim Cell 2" target="_blank" class="primary-text-light"><span class="icon fa fa-whatsapp"></span><span> Whatsapp</span></a></li>
+                    </ul>
+                </nav>
+                <div data-wow-delay="200ms" class="site-footer-copyright secondary-text-light wow fadeInUpShort">Karim Cell 2 - Selamat BerInternet.</div>
+            </div>
+        </div>
+    </div>
+    </div>
+    </div>
+    <script src="assets\js\jquery.min.js"></script>
+    <script src="assets\js\bootstrap.min.js"></script>
+    <script src="assets\js\vendor.js"></script>
+    <script src="assets\js\main.js"></script>
+    <script src="assets\js\demo.js"></script>
 </body>
 </html>
