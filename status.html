@@ -5,59 +5,129 @@
     <meta name="description" content="">
     <meta name="viewport" content="width=device-width, initial-scale=1">
     $(if refresh-timeout)
-    <meta http-equiv="refresh" content="$(refresh-timeout-secs)">$(endif)
-    <link rel="icon" href="assets\img\favicon.png">
-    <link rel="apple-touch-icon" href="assets\img\favicon.png">
+    <meta http-equiv="refresh" content="$(refresh-timeout-secs)">
+    $(endif)
+    <link rel="icon" href="assets/img/favicon.png">
+    <link rel="apple-touch-icon" href="assets/img/favicon.png">
     <link href="https://fonts.googleapis.com/css?family=Roboto:300,300i,400,400i,500,500i,700,700i" rel="stylesheet">
-    <link id="bootstrap_theme" rel="stylesheet" href="assets\css\theme-4-bootstrap.css">
-    <link rel="stylesheet" href="assets\css\vendor.css">
-    <link id="theme" rel="stylesheet" href="assets\css\theme-4.css">
-    <link rel="stylesheet" href="assets\css\demo.css">
-    <link rel="stylesheet" href="assets\css\custom.css">
-    <script src="assets\js\modernizr.js"></script>
+    <link id="bootstrap_theme" rel="stylesheet" href="assets/css/theme-4-bootstrap.css">
+    <link rel="stylesheet" href="assets/css/vendor.css">
+    <link id="theme" rel="stylesheet" href="assets/css/theme-4.css">
+    <link rel="stylesheet" href="assets/css/demo.css">
+    <link rel="stylesheet" href="assets/css/custom.css">
+    <script src="assets/js/modernizr.js"></script>
     <title>Karim Cell 2</title>
 </head>
-<body bottommargin="0" topmargin="0" leftmargin="0" rightmargin="0"
-$(if advert-pending == 'yes')
-	onLoad="openAdvert()"
-$(endif)
->
-<table width="100%" height="100%">
-
-<tr>
-<td align="center" valign="middle">
-<form action="$(link-logout)" name="logout" onSubmit="return openLogout()">
-<table border="1" class="tabula">
-$(if login-by == 'trial')
-	<br><div style="text-align: center;">Welcome trial user!</div><br>
-$(elif login-by != 'mac')
-	<br><div style="text-align: center;">Welcome $(username)!</div><br>
-$(endif)
-	<tr><td align="right">IP address:</td><td>$(ip)</td></tr>
-	<tr><td align="right">bytes up/down:</td><td>$(bytes-in-nice) / $(bytes-out-nice)</td></tr>
-$(if session-time-left)
-	<tr><td align="right">connected / left:</td><td>$(uptime) / $(session-time-left)</td></tr>
-$(else)
-	<tr><td align="right">connected:</td><td>$(uptime)</td></tr>
-$(endif)
-$(if blocked == 'yes')
-	<tr><td align="right">status:</td><td><div style="color: #FF8080">
-<a href="$(link-advert)" target="hotspot_advert">advertisement</a> required</div></td>
-$(elif refresh-timeout)
-	<tr><td align="right">status refresh:</td><td>$(refresh-timeout)</td>
-$(endif)
-
-</table>
-$(if login-by-mac != 'yes')
-<br>
-<!-- user manager link. if user manager resides on other router, replace $(hostname) by its address
-<button onclick="document.location='http://$(hostname)/user?subs='; return false;">status</button>
-<!-- end of user manager link -->
-<input type="submit" value="log off">
-$(endif)
-</form>
-
-</td>
-</table>
+<body>
+    <div class="site">
+        <div id="site_loader" class="site-loader">
+            <div class="spinner"><span class="bounce"></span><span class="bounce"></span><span class="bounce"></span></div>
+        </div>
+        <div class="site-canvas">
+            <div id="site_header" class="site-header">
+                <nav id="site_header_navbar" class="site-header-navbar navbar navbar-fixed-top navbar-lg navbar-bg-from-transparent navbar-fg-from-light navbar-light">
+                    <div class="container">
+                        <div id="site_header_navbar_collapse" class="collapse navbar-collapse">
+                            <ul class="nav navbar-nav navbar-right">
+                                <li><a href="alogin.html"><span class="navbar-nav-elem-wrap"></span><span class="text">Home</span></span></a> </li>
+                                <li><a href="#page_intro_section" data-smooth-scroll="true"><span class="navbar-nav-elem-wrap"><span class="text">Status</span></span></a></li>
+                                <li><a href="logout.html?erase-cookie=true"><span class="navbar-nav-elem-wrap"><span class="text">Logout</span></span></a></li>
+                            </ul>
+                        </div>
+                    </div>
+                </nav>
+            </div>
+            <div id="site_content" class="site-content">
+                <div id="page_intro_section" style="height:100vh;" class="align align-middle page-intro-section page-intro-section-lg section section-md bg-primary">
+                    <div data-css-background-image="assets/img/page-intro-bg-pattern.png" class="bg-img bg-img-parallax bg-repeat bg-no-cover"></div>
+                    <div class="col-lg-3"></div>
+                    <div data-wow-delay="50ms" class="widget-section widget widget_text col-sm-12 col-md-12 col-lg-6 mt-vr mt-sm-0 wow fadeInUpShort">
+                        <div class="widget-wrap">
+                            <div class="textwidget">
+                                <div class="card card-light">
+                                    <div class="card-title pt-md bg-secondary">
+                                        <div class="card-text">
+                                            <center>
+                                                <div class="title primary-text-light">Status Penggunaan Internet Anda</div>
+                                            </center>
+                                        </div>
+                                    </div>
+                                    <div class="card">
+                                        <tr>
+                                            <td>
+                                                <div class="hotsite-container favsite-count">
+                                                    <div class="hotsite hotsite-ele cur">
+                                                        <div class="row">
+                                                            <div class="panel panel-default">
+                                                                <div class="panel-body">
+                                                                    <table class="table table-striped">
+                                                                        <tbody>
+                                                                            <tr><td class="success">Username</td><td class="danger">$(username)</td></tr>
+                                                                            <tr><td>IP Address</td><td>$(ip)</td></tr>
+                                                                            <tr><td class="success">MAC Address</td><td class="danger">$(mac)</td></tr>
+                                                                            $(if session-time-left)
+                                                                            <tr><td>Connected / left:</td><td>$(uptime) / $(session-time-left)</td></tr>
+                                                                            $(else)
+                                                                            <tr><td>Connected </td><td>$(uptime)</td></tr>
+                                                                            $(endif)
+                                                                            <tr><td class="success">Download / Upload</td><td class="danger">$(bytes-out-nice) / $(bytes-in-nice)</td></tr>
+                                                                            $(if refresh-timeout)
+                                                                            <tr><td>Status refresh</td><td>$(refresh-timeout)</td></tr>
+                                                                            $(endif)
+                                                                            $(if limit-bytes-total)
+                                                                            <tr><td class="success">Sisa Kuota</td><td class="danger">$(if limit-bytes-total)
+                                                                                    <script language="JavaScript"> result = ($(limit - bytes - total) / 1000000).toFixed(2);document.write(result);
+                                                                                    </script> MiB $(endif) $(if limit-bytes-total == '')Unlimited$(endif)
+                                                                                </td>
+                                                                            </tr>
+                                                                            $(else)
+                                                                            <tr><td class="success">Sisa Kuota</td><td class="danger">$(if limit-bytes-out)
+                                                                                    <script language="JavaScript">result = ($(limit - bytes - out) / 1000000).toFixed(2);document.write(result);
+                                                                                    </script> MiB $(endif) $(if limit-bytes-out == '')Unlimited$(endif)
+                                                                                </td>
+                                                                            </tr>
+                                                                            $(endif)
+                                                                            $(if session-time-left)
+                                                                            <tr><td>Sisa Waktu</td><td>$(session-time-left)</td></tr>
+                                                                            $(endif)
+                                                                        </tbody>
+                                                                    </table>
+                                                                </div>
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </td>
+                                        </tr>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div id="site_footer">
+        <div id="site_footer_info" class="site-footer-info section section-sm text-center bg-dark">
+            <div class="container">
+                <nav class="site-footer-social-nav mb-lg">
+                    <ul class="site-footer-social-menu list-inline ml-0">
+                        <li data-wow-delay="100ms" class="menu-item px-md wow fadeInUpShort"><a href="https://www.facebook.com/karimdan.adra/" target="_blank" class="primary-text-light"><span class="icon fa fa-facebook-official"></span><span> Facebook</span></a></li>
+                        <li data-wow-delay="100ms" class="menu-item px-md wow fadeInUpShort"><a href="https://www.instagram.com/karim.2501" target="_blank" class="primary-text-light"><span class="icon fa fa-instagram"></span><span> Instagram</span></a></li>
+                        <li data-wow-delay="100ms" class="menu-item px-md wow fadeInUpShort"><a href="https://wa.me/6285769143295?text=Hallo kak, saya mau beli voucher internet Karim Cell 2" target="_blank" class="primary-text-light"><span class="icon fa fa-whatsapp"></span><span> Whatsapp</span></a></li>
+                    </ul>
+                </nav>
+                <div data-wow-delay="200ms" class="site-footer-copyright secondary-text-light wow fadeInUpShort">Karim Cell 2 - Selamat BerInternet.</div>
+            </div>
+        </div>
+    </div>
+    </div>
+    </div>
+    <script src="assets\js\jquery.min.js"></script>
+    <script src="assets\js\bootstrap.min.js"></script>
+    <script src="assets\js\vendor.js"></script>
+    <script src="assets\js\main.js"></script>
+    <script src="assets\js\demo.js"></script>
 </body>
 </html>
