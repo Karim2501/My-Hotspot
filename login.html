@@ -45,6 +45,20 @@
                     <div class="align-container">
                         <div class="container">
                             <div class="row">
+                                <div class="col-md-12">
+                                    <div class="modal fade" id="myModal">
+                                        <div class="modal-dialog">
+                                            <div class="modal-content">
+                                                <div class="modal-header bg-secondary">
+                                                    <h1>Peringatan</h1>
+                                                </div>
+                                                <div class="modal-body primary-text-dark">
+                                                    Hotspot ini tidak cocok digunakan untuk DOWNLOAD/UPLOAD file besar (>100MB)
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
                                 <center>
                                     <div data-wow-delay="100ms" class="widget-section widget widget_text col-md-offset-4 col-lg-offset-3 col-lg-6 mt-vr mt-sm-0 wow fadeInUpShort">
                                         <div class="widget-wrap">
@@ -162,6 +176,16 @@
     <script id="intergram" type="text/javascript" src="https://www.intergram.xyz/js/widget.js"></script>
     <script type="text/javascript">
         document.login.username.focus();
+    </script>
+    <script type="text/javascript">
+        $(document).ready(function() {
+            setTimeout(function () {
+                $("#myModal").modal("show");
+                setTimeout(function (){
+                    $("#myModal").modal("hide");
+                }, 3500);
+            }, 200);
+        });
     </script>
 </body>
 </html>
