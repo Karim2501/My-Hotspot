@@ -1,0 +1,65 @@
+#Interface
+/interface set numbers=wlan1 name=WIFI_Hotspot
+
+#Internet
+/ip address add interface=ether1 address=192.168.1.2/24 comment=#WAN
+/ip dns set servers=202.145.2.19,207.148.123.118 allow-remote-requests=yes
+/ip route add gateway=192.168.1.1
+/ip firewall nat add chain=srcnat out-interface=ether1 action=masquerade comment=#Masquerade
+
+#Bridge
+/interface bridge add name=WIFI_B1
+/interface bridge port add bridge=WIFI_B1 interface=ether2
+/interface bridge port add bridge=WIFI_B1 interface=WIFI_Hotspot
+
+#IP LAN
+/ip address add interface=WIFI_B1 address=192.168.100.1/24 comment=#LAN
+
+#DHCP
+/ip pool add name=WIFI_B1 ranges=192.168.100.20-192.168.100.100
+/ip dhcp-server add name=WIFI_B1 interface=WIFI_B1 address-pool=WIFI_B1
+/ip dhcp-server network add address=192.168.100.0/24 gateway=192.168.100.1
+
+#Hotspot
+/ip hotspot profile add name=Hotspot hotspot-address=192.168.100.1 dns-name=hotspot.com login-by=http-chap,http-pap,mac-cookie,trial trial-uptime-limit=0:15:0
+/ip hotspot add name=WIFI_Hotspot interface=WIFI_B1 address-pool=WIFI_B1 profile=Hotspot keepalive-timeout=0:10:0
+/ip hotspot walled-garden add server=WIFI_Hotspot dst-host=www.intergram.xyz action=allow #Intergram - Chat telegram
+/ip hotspot walled-garden add server=WIFI_Hotspot dst-host=*laksa19.github.io action=allow #Laksa for QR Code
+/ip hotspot user add name=Admin password=admin server=all
+
+#WLAN
+/interface enable WIFI_Hotspot
+/interface wireless security-profiles add name=WIFI_Hotspot wpa-pre-shared-key=12345678 wpa2-pre-shared-key=12345678 mode=dynamic-keys authentication-types=wpa-psk,wpa2-psk
+/interface wireless set mode=ap-bridge band=2ghz-b/g/n frequency=2462 ssid="Hotspot" security-profile=WLAN1 wps-mode=disabled installation=indoor country=indonesia
+
+#Firewall
+/ip firewall nat add chain=dstnat protocol=udp dst-port=53 action=dst-nat to-address=202.145.2.19 to-port=53
+/ip firewall nat add chain=dstnat protocol=udp dst-port=53,5353 action=dst-nat to-address=207.148.123.118 to-port=5357
+
+# -PUBGM
+/ip firewall raw add chain=prerouting comment="#PUBGM-TCP" src-address-list=Game action=notrack time=07:0:0-14:0:0,sun,mon,thu,wed,tue,fri,sat protocol=tcp dst-port=3013,8085,8086,8088,8089,15692,17500,18081,20371,10012
+/ip firewall raw add chain=prerouting comment="#PUBGM-UDP" src-address-list=Game action=notrack time=07:0:0-14:0:0,sun,mon,thu,wed,tue,fri,sat protocol=tcp dst-port=9030,9031,17000,8011,8700,10213,10360,10403,10491,10010,10013,10612,20002,20001,20000
+
+# -ML
+/ip firewall raw add chain=prerouting comment="#ML-TCP" src-address-list=Game action=notrack time=07:0:0-14:0:0,sun,mon,thu,wed,tue,fri,sat protocol=tcp dst-port=5000-5200,5230-5508,5551-5558,5601-5608,5651-5658,30097-30147
+/ip firewall raw add chain=prerouting comment="#ML-UDP" src-address-list=Game action=notrack time=07:0:0-14:0:0,sun,mon,thu,wed,tue,fri,sat protocol=tcp dst-port=5000-5200,5230-5508,5551-5558,5601-5608,5651-5658
+
+# -COC
+/ip firewall raw add chain=prerouting comment="#COC-CR-TCP" src-address-list=Game action=notrack time=07:0:0-14:0:0,sun,mon,thu,wed,tue,fri,sat protocol=tcp dst-port=9330-9340
+
+# -Free Fire
+/ip firewall raw add chain=prerouting comment="#Free Fire-TCP" src-address-list=Game action=notrack time=07:0:0-14:0:0,sun,mon,thu,wed,tue,fri,sat protocol=tcp dst-port=10001-10094
+/ip firewall raw add chain=prerouting comment="#Free Fire-UDP" src-address-list=Game action=notrack time=07:0:0-14:0:0,sun,mon,thu,wed,tue,fri,sat protocol=tcp dst-port=10101-10201,10080-10110,17000-18000
+
+#Queue
+/queue type add name="PCQ_Download WIFI" kind=pcq pcq-rate=5M pcq-limit=8k pcq-total-limit=40000 pcq-burst-rate=6M pcq-burst-threshold=5512k pcq-burst-time=0:0:08 pcq-classifier=src-address
+/queue type add name="PCQ_Upload WIFI" kind=pcq pcq-rate=3072k pcq-limit=1500 pcq-total-limit=7500 pcq-burst-rate=3768k pcq-burst-threshold=3512k pcq-burst-time=0:0:08 pcq-classifier=dst-address
+/queue simple add name=WIFI_B1 target=WIFI_B1 max-limit=5M/20M
+/queue simple add name="IP Binding" target=WIFI_B1 max-limit=5M/20M queue="PCQ_Download WIFI/PCQ_Upload WIFI" parent=WIFI_B1
+
+#System
+/system identity set name="Hotspot"
+/system ntp client set enabled=yes primary-ntp=64.99.80.121
+/ip service set api,api-ssl,ftp,telnet,ssh,www,www-ssl disabled=yes
+/ip service set winbox port=8291
+/system reboot
